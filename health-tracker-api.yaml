@@ -1,0 +1,224 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Health Tracker API
+  description: This API provides endpoints for handling CRUD operations on the Health Tracker data.
+  contact:
+    name: Seamus McCarthy
+    email: 20091380@mail.wit.ie
+paths:
+  /api/users:
+    post:
+      description: Add a user to the app
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: User has been created
+    get:
+      tags:
+        - User
+      responses:
+        200:
+          description: This is a list of users in the app
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /api/users/{user-id}:
+    patch:
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/UserIdPath'
+      description: Update a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: User has been updated
+    delete:
+      tags:
+        - User
+      parameters:
+          - $ref: '#/components/parameters/UserIdPath'
+      responses:
+        200: 
+          description: User has been deleted
+    get:
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/UserIdPath'
+      responses:
+        200:
+          description: This is a specific user in the app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'        
+  /api/users/{user-id}/activities:
+    delete:
+      tags:
+        - User
+      parameters:
+          - $ref: '#/components/parameters/UserIdPath'
+      responses:
+        200: 
+          description: User activities have been deleted
+    get:
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/UserIdPath'
+      responses:
+        200:
+          description: This is a list of user activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+  /api/users/email/{email}:
+    get:
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/EmailPath'
+      responses:
+        200:
+          description: This is a specific user in the app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+
+  /api/activities:
+    post:
+      tags:
+        - Activity
+      description: Add an activity to the app
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Activity'
+      responses:
+        200:
+          description: Activity has been created
+    get:
+      tags:
+        - Activity
+      responses:
+        200:
+          description: This is a list of activities in the app
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+  /api/activities/{activity-id}:
+    patch:
+      tags:
+        - Activity
+      parameters:
+        - $ref: '#/components/parameters/ActivityIdPath'
+      description: Update an activity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Activity'
+      responses:
+        200:
+          description: Activity has been updated
+    delete:
+      tags:
+        - Activity
+      parameters:
+          - $ref: '#/components/parameters/ActivityIdPath'
+      responses:
+        200: 
+          description: Activity has been deleted
+    get:
+      tags:
+        - Activity
+      parameters:
+        - $ref: '#/components/parameters/ActivityIdPath'
+      responses:
+        200:
+          description: This is a specific activity in the app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+  
+  
+
+components:
+  parameters:
+    EmailPath:
+      in: path
+      name: email
+      description: Email path parameter
+      required: true
+      schema:
+        type: string
+        example: homer@simpson.com
+    UserIdPath:
+      in: path
+      name: user-id
+      description: User id path parameter
+      required: true
+      schema:
+        type: integer
+        example: 2323
+    ActivityIdPath:
+      in: path
+      name: activity-id
+      description: Activity id path parameter
+      required: true
+      schema:
+        type: integer
+        example: 2323
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2323
+        name: 
+          type: string
+          example: Homer Simpson
+        email:
+          type: string
+          example: homer@simpson.com
+    Activity:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2323
+        name: 
+          type: string
+          example: Aerobics
+        
+tags:
+  - name: User
+    description: Everything about our Users
+  - name: Activity
+    description: Everything about our Activities
