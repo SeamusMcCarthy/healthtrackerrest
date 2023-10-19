@@ -1,8 +1,10 @@
 package ie.setu.utils
 
 import ie.setu.domain.Activity
+import ie.setu.domain.Plan
 import ie.setu.domain.User
 import ie.setu.domain.db.Activities
+import ie.setu.domain.db.Plans
 import ie.setu.domain.db.Users
 import org.jetbrains.exposed.sql.ResultRow
 
@@ -19,4 +21,10 @@ fun mapToActivity(it: ResultRow) = Activity(
     started = it[Activities.started],
     calories = it[Activities.calories],
     userId = it[Activities.userId]
+)
+
+fun mapToPlan(it: ResultRow) = Plan(
+    id = it[Plans.id],
+    name = it[Plans.name],
+    price = it[Plans.price],
 )
