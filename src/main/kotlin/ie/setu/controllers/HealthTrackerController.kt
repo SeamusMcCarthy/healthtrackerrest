@@ -7,6 +7,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import ie.setu.domain.Activity
 import ie.setu.domain.User
 import ie.setu.domain.repository.ActivityDAO
+import ie.setu.domain.repository.PlanDAO
 import ie.setu.domain.repository.UserDAO
 import io.javalin.http.Context
 
@@ -14,6 +15,7 @@ object HealthTrackerController {
 
     private val userDao = UserDAO()
     private val activityDao = ActivityDAO()
+    private val planDao = PlanDAO()
 
     fun getAllUsers(ctx: Context) {
         ctx.json(userDao.getAll())
@@ -87,4 +89,14 @@ object HealthTrackerController {
         ctx.json(activity)
     }
 
+    fun getAllPlans(ctx: Context) {
+        ctx.json(planDao.getAll())
+    }
+
+    fun getPlanByPlanId(ctx: Context) {
+        val plan = planDao.findById(ctx.pathParam("plan-id").toInt())
+        if (plan != null) {
+            ctx.json(plan)
+        }
+    }
 }

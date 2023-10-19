@@ -45,6 +45,12 @@ class JavalinConfig {
                 get(HealthTrackerController::getAllActivities)
                 post(HealthTrackerController::addActivity)
             }
+            path("/api/plans") {
+                get(HealthTrackerController::getAllPlans)
+                path("{plan-id}"){
+                    get(HealthTrackerController::getPlanByPlanId)
+                }
+            }
         }
     }
 }
