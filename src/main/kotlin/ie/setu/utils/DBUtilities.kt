@@ -34,6 +34,5 @@ fun mapToPlan(it: ResultRow) = Plan(
 fun mapToSchedule(it: ResultRow) = Schedule(
     id = it[Schedules.id],
     classname = it[Schedules.classname],
-    dayofweek = it[Schedules.dayofweek],
-    time = it[Schedules.time]
+    dayofweek = it[Schedules.dayofweek]
 )
