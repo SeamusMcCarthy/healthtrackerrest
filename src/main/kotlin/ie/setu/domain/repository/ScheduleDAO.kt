@@ -42,8 +42,8 @@ class ScheduleDAO {
     fun save(schedule: Schedule){
         transaction {
             Schedules.insert {
-                it[className] = schedule.className
-                it[dayOfWeek] = schedule.dayOfWeek
+                it[classname] = schedule.classname
+                it[dayofweek] = schedule.dayofweek
                 it[time] = schedule.time
 
             }
