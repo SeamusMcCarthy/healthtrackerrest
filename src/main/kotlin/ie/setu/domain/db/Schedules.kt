@@ -9,7 +9,7 @@ import java.time.LocalTime
 
 object Schedules : Table("schedules") {
     val id = integer("id").autoIncrement().primaryKey()
-    val className = varchar("className", 100)
-    val dayOfWeek = varchar("dayOfWeek", 9)
+    val classname = varchar("classname", 100)
+    val dayofweek = varchar("dayofweek", 9)
     val time = time("time")
 }
