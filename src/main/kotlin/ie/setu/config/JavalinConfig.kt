@@ -51,6 +51,12 @@ class JavalinConfig {
                     get(HealthTrackerController::getPlanByPlanId)
                 }
             }
+            path("/api/schedules") {
+                get(HealthTrackerController::getAllSchedules)
+                path("{schedule-id}"){
+                    get(HealthTrackerController::getScheduleByScheduleId)
+                }
+            }
         }
     }
 }

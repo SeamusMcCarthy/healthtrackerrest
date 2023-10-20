@@ -8,6 +8,7 @@ import ie.setu.domain.Activity
 import ie.setu.domain.User
 import ie.setu.domain.repository.ActivityDAO
 import ie.setu.domain.repository.PlanDAO
+import ie.setu.domain.repository.ScheduleDAO
 import ie.setu.domain.repository.UserDAO
 import io.javalin.http.Context
 
@@ -16,6 +17,7 @@ object HealthTrackerController {
     private val userDao = UserDAO()
     private val activityDao = ActivityDAO()
     private val planDao = PlanDAO()
+    private val scheduleDao = ScheduleDAO()
 
     fun getAllUsers(ctx: Context) {
         ctx.json(userDao.getAll())
@@ -97,6 +99,17 @@ object HealthTrackerController {
         val plan = planDao.findById(ctx.pathParam("plan-id").toInt())
         if (plan != null) {
             ctx.json(plan)
+        }
+    }
+
+    fun getAllSchedules(ctx: Context) {
+        ctx.json(scheduleDao.getAll())
+    }
+
+    fun getScheduleByScheduleId(ctx: Context) {
+        val schedule = scheduleDao.findById(ctx.pathParam("schedule-id").toInt())
+        if (schedule != null) {
+            ctx.json(schedule)
         }
     }
 }
