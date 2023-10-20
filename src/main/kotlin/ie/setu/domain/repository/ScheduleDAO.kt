@@ -29,22 +29,12 @@ class ScheduleDAO {
         }
     }
 
-//    //Find all activities for a specific user id
-//    fun findByUserId(userId: Int): List<Schedule>{
-//        return transaction {
-//            Schedules
-//                .select {Schedules.userId eq userId}
-//                .map {mapToActivity(it)}
-//        }
-//    }
-
-    //Save an activity to the database
+    //Save an schedule to the database
     fun save(schedule: Schedule){
         transaction {
             Schedules.insert {
                 it[classname] = schedule.classname
                 it[dayofweek] = schedule.dayofweek
-                it[time] = schedule.time
 
             }
         }
