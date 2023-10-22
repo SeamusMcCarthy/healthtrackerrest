@@ -57,6 +57,12 @@ class JavalinConfig {
                     get(HealthTrackerController::getScheduleByScheduleId)
                 }
             }
+            path("/api/trainers") {
+                get(HealthTrackerController::getAllTrainers)
+                path("{trainer-id}"){
+                    get(HealthTrackerController::getTrainerByTrainerId)
+                }
+            }
         }
     }
 }
