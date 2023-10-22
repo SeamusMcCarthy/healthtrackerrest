@@ -1,13 +1,7 @@
 package ie.setu.utils
 
-import ie.setu.domain.Activity
-import ie.setu.domain.Plan
-import ie.setu.domain.Schedule
-import ie.setu.domain.User
-import ie.setu.domain.db.Activities
-import ie.setu.domain.db.Plans
-import ie.setu.domain.db.Schedules
-import ie.setu.domain.db.Users
+import ie.setu.domain.*
+import ie.setu.domain.db.*
 import org.jetbrains.exposed.sql.ResultRow
 
 fun mapToUser(it: ResultRow) = User(
@@ -35,4 +29,11 @@ fun mapToSchedule(it: ResultRow) = Schedule(
     id = it[Schedules.id],
     classname = it[Schedules.classname],
     dayofweek = it[Schedules.dayofweek]
+)
+
+fun mapToTrainer(it: ResultRow) = Trainer(
+    id = it[Trainers.id],
+    name = it[Trainers.name],
+    email = it[Trainers.email],
+    password = it[Trainers.password],
 )
