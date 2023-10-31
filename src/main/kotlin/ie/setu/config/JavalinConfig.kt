@@ -63,6 +63,12 @@ class JavalinConfig {
                     get(HealthTrackerController::getTrainerByTrainerId)
                 }
             }
+            path("/api/sleeps") {
+                get(HealthTrackerController::getAllSleeps)
+                path("{sleep-id}"){
+                    get(HealthTrackerController::getSleepBySleepId)
+                }
+            }
         }
     }
 }

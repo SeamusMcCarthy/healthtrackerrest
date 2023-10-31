@@ -16,6 +16,8 @@ object HealthTrackerController {
     private val planDao = PlanDAO()
     private val scheduleDao = ScheduleDAO()
     private val trainerDao = TrainerDAO()
+    private val assessmentDao = AssessmentDAO()
+    private val sleepDao = SleepDAO()
 
     fun getAllUsers(ctx: Context) {
         ctx.json(userDao.getAll())
@@ -119,6 +121,28 @@ object HealthTrackerController {
         val trainer = trainerDao.findById(ctx.pathParam("trainer-id").toInt())
         if (trainer != null) {
             ctx.json(trainer)
+        }
+    }
+
+    fun getAllAssessments(ctx: Context) {
+        ctx.json(assessmentDao.getAll())
+    }
+
+    fun getAssessmentByAssessmentId(ctx: Context) {
+        val assessment = assessmentDao.findById(ctx.pathParam("assessment-id").toInt())
+        if (assessment != null) {
+            ctx.json(assessment)
+        }
+    }
+
+    fun getAllSleeps(ctx: Context) {
+        ctx.json(sleepDao.getAll())
+    }
+
+    fun getSleepBySleepId(ctx: Context) {
+        val sleep = sleepDao.findBySleepId(ctx.pathParam("sleep-id").toInt())
+        if (sleep != null) {
+            ctx.json(sleep)
         }
     }
 }
