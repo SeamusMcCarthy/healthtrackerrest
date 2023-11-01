@@ -1,6 +1,5 @@
 package ie.setu.utils
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As
 import ie.setu.domain.*
 import ie.setu.domain.db.*
 import org.jetbrains.exposed.sql.ResultRow
@@ -13,8 +12,8 @@ fun mapToUser(it: ResultRow) = User(
     gender = it[Users.gender],
     height = it[Users.height],
     startWeight = it[Users.startWeight],
-    trainerID = it[Users.trainerId],
-    planID = it[Users.planID]
+    trainerId = it[Users.trainerId],
+    planId = it[Users.planId]
 )
 
 fun mapToActivity(it: ResultRow) = Activity(
@@ -54,7 +53,7 @@ fun mapToAssessment(it: ResultRow) = Assessment(
     waist = it[Assessments.waist],
     hips = it[Assessments.hips],
     assessmentDate = it[Assessments.assessmentDate],
-    userID = it[Assessments.userID]
+    userId = it[Assessments.userId]
 )
 
 fun mapToSleep(it: ResultRow) = Sleep(

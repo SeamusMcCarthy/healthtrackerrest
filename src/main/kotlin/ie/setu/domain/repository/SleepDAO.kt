@@ -1,10 +1,7 @@
 package ie.setu.domain.repository
 
-import ie.setu.domain.Activity
 import ie.setu.domain.Sleep
-import ie.setu.domain.db.Activities
 import ie.setu.domain.db.Sleeps
-import ie.setu.utils.mapToActivity
 import ie.setu.utils.mapToSleep
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -44,6 +41,25 @@ class SleepDAO {
     fun save(sleep: Sleep){
         transaction {
             Sleeps.insert {
+                it[started] = sleep.started
+                it[duration] = sleep.duration
+                it[userId] = sleep.userId
+            }
+        }
+    }
+
+    fun delete(id: Int):Int {
+        return transaction {
+            Sleeps.deleteWhere {
+                Sleeps.id eq id
+            }
+        }
+    }
+
+    fun update(id: Int, sleep: Sleep){
+        transaction {
+            Sleeps.update ({
+                Sleeps.id eq id}) {
                 it[started] = sleep.started
                 it[duration] = sleep.duration
                 it[userId] = sleep.userId

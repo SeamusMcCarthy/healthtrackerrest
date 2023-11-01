@@ -1,11 +1,9 @@
 package ie.setu.domain.repository
 
+
 import ie.setu.domain.Assessment
-import ie.setu.domain.User
 import ie.setu.domain.db.Assessments
-import ie.setu.domain.db.Users
 import ie.setu.utils.mapToAssessment
-import ie.setu.utils.mapToUser
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -28,6 +26,14 @@ class AssessmentDAO {
         }
     }
 
+    fun findByUserId(userId: Int): List<Assessment>{
+        return transaction {
+            Assessments
+                .select { Assessments.userId eq userId}
+                .map { mapToAssessment(it) }
+        }
+    }
+
     fun save(assessment: Assessment){
         transaction {
             Assessments.insert {
@@ -38,12 +44,10 @@ class AssessmentDAO {
                 it[waist] = assessment.waist
                 it[hips] = assessment.hips
                 it[assessmentDate] = assessment.assessmentDate
-                it[userID] = assessment.userID
+                it[userId] = assessment.userId
             }
         }
     }
-
-
 
     fun delete(id: Int):Int {
         return transaction {
@@ -64,7 +68,7 @@ class AssessmentDAO {
                 it[waist] = assessment.waist
                 it[hips] = assessment.hips
                 it[assessmentDate] = assessment.assessmentDate
-                it[userID] = assessment.userID
+                it[userId] = assessment.userId
             }
         }
     }

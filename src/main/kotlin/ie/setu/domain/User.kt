@@ -7,5 +7,5 @@ data class User (var id: Int,
                  var gender: Char,
                  var height: Int,
                  var startWeight: Int,
-                 var trainerID: Int,
-                 var planID: Int)
+                 var trainerId: Int,
+                 var planId: Int)

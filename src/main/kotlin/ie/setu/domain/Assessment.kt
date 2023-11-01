@@ -10,4 +10,4 @@ data class Assessment (var id: Int,
                        var waist:Int,
                        var hips:Int,
                        var assessmentDate: DateTime,
-                       var userID: Int)
+                       var userId: Int)
