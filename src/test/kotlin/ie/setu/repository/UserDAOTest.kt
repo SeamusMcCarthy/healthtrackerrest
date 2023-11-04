@@ -24,9 +24,9 @@ val user1 = users[0]
 val user2 = users[1]
 val user3 = users[2]
 
-val trainer1 = trainers[0]
+val userTrainer1 = trainers[0]
 
-val plan1 = plans[0]
+val userPlan1 = plans[0]
 
 class UserDAOTest {
 
@@ -43,13 +43,13 @@ class UserDAOTest {
     internal fun populateTrainerTable(): TrainerDAO{
         SchemaUtils.create(Trainers)
         val trainerDAO = TrainerDAO()
-        trainerDAO.save(trainer1)
+        trainerDAO.save(userTrainer1)
         return trainerDAO
     }
     internal fun populatePlanTable(): PlanDAO{
         SchemaUtils.create(Plans)
         val planDAO = PlanDAO()
-        planDAO.save(plan1)
+        planDAO.save(userPlan1)
         return planDAO
     }
     internal fun populateUserTable(): UserDAO{
@@ -113,7 +113,7 @@ class UserDAOTest {
                 userDAO.save(user3)
 
                 //Act & Assert
-                assertEquals(null, userDAO.findById(4))
+                assertEquals(user2, userDAO.findById(2))
             }
         }
 
