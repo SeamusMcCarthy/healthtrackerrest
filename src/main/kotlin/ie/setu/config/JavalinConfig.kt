@@ -43,14 +43,8 @@ class JavalinConfig {
                         get(HealthTrackerController::getSleepsByUserId)
                     }
                 }
-                path("/plans/{plan_id}"){
-                    get(HealthTrackerController::getUsersByPlanId)
-                }
                 path("/email/{email}"){
                     get(HealthTrackerController::getUserByEmail)
-                }
-                path("/trainer/{trainer_id}"){
-                    get(HealthTrackerController::getUsersByTrainerId)
                 }
             }
             path("/api/activities") {
@@ -60,17 +54,18 @@ class JavalinConfig {
                     get(HealthTrackerController::getActivityByActivityId)
                     delete(HealthTrackerController::deleteActivity)
                     patch(HealthTrackerController::updateActivity)
-
+                }
+                path("/type/{exercise-id}") {
+                    get(HealthTrackerController::getActivitiesByActivityType)
                 }
             }
             path("/api/assessments") {
                 get(HealthTrackerController::getAllAssessments)
                 post(HealthTrackerController::addAssessment)
-                path("{activity-id}"){
+                path("{assessment-id}"){
                     get(HealthTrackerController::getAssessmentByAssessmentId)
                     delete(HealthTrackerController::deleteAssessment)
                     patch(HealthTrackerController::updateAssessment)
-
                 }
             }
             path("/api/plans") {
@@ -80,15 +75,9 @@ class JavalinConfig {
                     get(HealthTrackerController::getPlanByPlanId)
                     delete(HealthTrackerController::deletePlan)
                     patch(HealthTrackerController::updatePlan)
-                }
-            }
-            path("/api/schedules") {
-                get(HealthTrackerController::getAllSchedules)
-                post(HealthTrackerController::addSchedule)
-                path("{schedule-id}"){
-                    get(HealthTrackerController::getScheduleByScheduleId)
-                    delete(HealthTrackerController::deleteSchedule)
-                    patch(HealthTrackerController::updateSchedule)
+                    path("users"){
+                        get(HealthTrackerController::getUsersByPlanId)
+                    }
                 }
             }
             path("/api/trainers") {
@@ -98,7 +87,14 @@ class JavalinConfig {
                     get(HealthTrackerController::getTrainerByTrainerId)
                     delete(HealthTrackerController::deleteTrainer)
                     patch(HealthTrackerController::updateTrainer)
+                    path("users"){
+                        get(HealthTrackerController::getUsersByTrainerId)
+                    }
                 }
+                path("/email/{email}"){
+                    get(HealthTrackerController::getTrainerByEmail)
+                }
+
             }
             path("/api/sleeps") {
                 get(HealthTrackerController::getAllSleeps)
@@ -107,7 +103,16 @@ class JavalinConfig {
                     get(HealthTrackerController::getSleepBySleepId)
                     delete(HealthTrackerController::deleteSleep)
                     patch(HealthTrackerController::updateSleep)
+                }
+            }
 
+            path("/api/exercises") {
+                get(HealthTrackerController::getAllExercises)
+                post(HealthTrackerController::addExercise)
+                path("{exercise-id}"){
+                    get(HealthTrackerController::getExerciseByExerciseId)
+                    delete(HealthTrackerController::deleteExercise)
+                    patch(HealthTrackerController::updateExercise)
                 }
             }
         }

@@ -22,6 +22,7 @@ fun mapToActivity(it: ResultRow) = Activity(
     duration = it[Activities.duration],
     started = it[Activities.started],
     calories = it[Activities.calories],
+    activityType = it[Activities.activityType],
     userId = it[Activities.userId]
 )
 
@@ -31,10 +32,10 @@ fun mapToPlan(it: ResultRow) = Plan(
     price = it[Plans.price],
 )
 
-fun mapToSchedule(it: ResultRow) = Schedule(
-    id = it[Schedules.id],
-    classname = it[Schedules.classname],
-    dayofweek = it[Schedules.dayofweek]
+fun mapToExercise(it: ResultRow) = Exercise(
+    id = it[Exercises.id],
+    name = it[Exercises.name],
+    type = it[Exercises.type]
 )
 
 fun mapToTrainer(it: ResultRow) = Trainer(

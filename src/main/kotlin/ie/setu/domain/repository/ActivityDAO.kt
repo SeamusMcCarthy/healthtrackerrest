@@ -28,6 +28,16 @@ class ActivityDAO {
         }
     }
 
+    fun findByActivityType(exerciseID: Int): List<Activity> {
+        return transaction {
+            Activities.select {
+                Activities.activityType eq exerciseID
+            }
+                .map { mapToActivity(it) }
+
+        }
+    }
+
     //Find all activities for a specific user id
     fun findByUserId(userId: Int): List<Activity>{
         return transaction {
