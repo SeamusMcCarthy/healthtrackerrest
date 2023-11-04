@@ -51,10 +51,10 @@ class ActivityDAO {
     fun save(activity: Activity){
         transaction {
             Activities.insert {
-                it[description] = activity.description
                 it[duration] = activity.duration
                 it[started] = activity.started
                 it[calories] = activity.calories
+                it[activityType] = activity.activityType
                 it[userId] = activity.userId
             }
         }
@@ -72,10 +72,10 @@ class ActivityDAO {
         transaction {
             Activities.update ({
                 Activities.id eq id}) {
-                it[description] = activity.description
                 it[duration] = activity.duration
                 it[started] = activity.started
                 it[calories] = activity.calories
+                it[activityType] = activity.activityType
                 it[userId] = activity.userId
             }
         }

@@ -8,7 +8,6 @@ import org.jetbrains.exposed.sql.Table
 
 object Activities : Table("activities") {
     val id = integer("id").autoIncrement().primaryKey()
-    val description = varchar("description", 100)
     val duration = double("duration")
     val calories = integer("calories")
     val started = datetime("started")
