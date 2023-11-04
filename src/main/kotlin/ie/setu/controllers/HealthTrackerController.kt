@@ -50,8 +50,11 @@ object HealthTrackerController {
     fun getActivitiesByActivityType(ctx: Context) {
         if (exerciseDao.findById(ctx.pathParam("exercise-id").toInt()) != null) {
             val activities = activityDao.findByActivityType(ctx.pathParam("exercise-id").toInt())
+            val mapper = jacksonObjectMapper()
+                .registerModule(JodaModule())
+                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
             if (activities.isNotEmpty()) {
-                ctx.json(activities)
+                ctx.json(mapper.writeValueAsString(activities))
             }
         }
     }
@@ -200,8 +203,11 @@ object HealthTrackerController {
 
     fun getActivityByActivityId(ctx: Context) {
         val activity = activityDao.findByActivityId(ctx.pathParam("activity-id").toInt())
+        val mapper = jacksonObjectMapper()
+            .registerModule(JodaModule())
+            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
         if (activity != null) {
-            ctx.json(activity)
+            ctx.json(mapper.writeValueAsString(activity))
         }
     }
 
@@ -258,26 +264,42 @@ object HealthTrackerController {
     }
 
     fun getAllAssessments(ctx: Context) {
-        ctx.json(assessmentDao.getAll())
+        //mapper handles the deserialization of Joda date into a String.
+        val mapper = jacksonObjectMapper()
+            .registerModule(JodaModule())
+            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+        ctx.json(mapper.writeValueAsString( assessmentDao.getAll() ))
     }
 
     fun getAssessmentByAssessmentId(ctx: Context) {
         val assessment = assessmentDao.findById(ctx.pathParam("assessment-id").toInt())
+        val mapper = jacksonObjectMapper()
+            .registerModule(JodaModule())
+            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
         if (assessment != null) {
-            ctx.json(assessment)
+            ctx.json(mapper.writeValueAsString(assessment))
         }
     }
 
     fun getAllSleeps(ctx: Context) {
-        ctx.json(sleepDao.getAll())
+        //mapper handles the deserialization of Joda date into a String.
+        val mapper = jacksonObjectMapper()
+            .registerModule(JodaModule())
+            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+        ctx.json(mapper.writeValueAsString( sleepDao.getAll() ))
     }
 
     fun getSleepBySleepId(ctx: Context) {
         val sleep = sleepDao.findBySleepId(ctx.pathParam("sleep-id").toInt())
+        val mapper = jacksonObjectMapper()
+            .registerModule(JodaModule())
+            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
         if (sleep != null) {
-            ctx.json(sleep)
+            ctx.json(mapper.writeValueAsString(sleep))
         }
     }
+
+
 
     fun getSleepsByUserId(ctx: Context) {
         if (userDao.findById(ctx.pathParam("user-id").toInt()) != null) {
