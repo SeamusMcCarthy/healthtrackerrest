@@ -21,6 +21,7 @@ paths:
         200:
           description: User has been created
     get:
+      description: Get all users
       tags:
         - User
       responses:
@@ -34,11 +35,11 @@ paths:
                   $ref: '#/components/schemas/User'
   /api/users/{user-id}:
     patch:
+      description: Update a user
       tags:
         - User
       parameters:
         - $ref: '#/components/parameters/UserIdPath'
-      description: Update a user
       requestBody:
         content:
           application/json:
@@ -48,14 +49,16 @@ paths:
         200:
           description: User has been updated
     delete:
+      description: Delete a user
       tags:
         - User
       parameters:
-          - $ref: '#/components/parameters/UserIdPath'
+        - $ref: '#/components/parameters/UserIdPath'
       responses:
-        200: 
+        200:
           description: User has been deleted
     get:
+      description: Get a specific user
       tags:
         - User
       parameters:
@@ -66,17 +69,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'        
+                $ref: '#/components/schemas/User'
   /api/users/{user-id}/activities:
-    delete:
-      tags:
-        - User
-      parameters:
-          - $ref: '#/components/parameters/UserIdPath'
-      responses:
-        200: 
-          description: User activities have been deleted
     get:
+      description: Get a user's activities
       tags:
         - User
       parameters:
@@ -90,8 +86,41 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Activity'
+  /api/users/{user-id}/assessments:
+    get:
+      description: Get a user's assessments
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/UserIdPath'
+      responses:
+        200:
+          description: This is a list of user assessments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assessment'
+  /api/users/{user-id}/sleeps:
+    get:
+      description: Get a user's sleep history
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/UserIdPath'
+      responses:
+        200:
+          description: This is a list of the user's sleep history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sleep'
   /api/users/email/{email}:
     get:
+      description: Find a user by email address
       tags:
         - User
       parameters:
@@ -103,8 +132,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-
-
   /api/activities:
     post:
       tags:
@@ -149,9 +176,9 @@ paths:
       tags:
         - Activity
       parameters:
-          - $ref: '#/components/parameters/ActivityIdPath'
+        - $ref: '#/components/parameters/ActivityIdPath'
       responses:
-        200: 
+        200:
           description: Activity has been deleted
     get:
       tags:
@@ -165,9 +192,382 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Activity'
-  
-  
-
+  /api/activities/type/{exercise-id}:
+    get:
+      tags:
+        - Activity
+      parameters:
+        - $ref: '#/components/parameters/ExerciseIdPath'
+      responses:
+        200:
+          description: This is a list of activities by exercise type
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+  /api/assessments:
+    post:
+      description: Add an assessment to the app
+      tags:
+        - Assessment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assessment'
+      responses:
+        200:
+          description: Assessment has been created
+    get:
+      description: Get all assessments
+      tags:
+        - Assessment
+      responses:
+        200:
+          description: This is a list of assessments in the app
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assessment'
+  /api/assessments/{assessment-id}:
+    patch:
+      description: Update an assessment
+      tags:
+        - Assessment
+      parameters:
+        - $ref: '#/components/parameters/AssessmentIdPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assessment'
+      responses:
+        200:
+          description: Assessment has been updated
+    delete:
+      description: Delete an assessment
+      tags:
+        - Assessment
+      parameters:
+        - $ref: '#/components/parameters/AssessmentIdPath'
+      responses:
+        200:
+          description: Assessment has been deleted
+    get:
+      description: Get a specific Assessment
+      tags:
+        - Assessment
+      parameters:
+        - $ref: '#/components/parameters/AssessmentIdPath'
+      responses:
+        200:
+          description: This is a specific assessment in the app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assessment'
+  /api/sleeps:
+    post:
+      description: Add a sleep to the app
+      tags:
+        - Sleep
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sleep'
+      responses:
+        200:
+          description: Sleep has been created
+    get:
+      description: Get all sleeps
+      tags:
+        - Sleep
+      responses:
+        200:
+          description: This is a list of sleeps in the app
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sleep'
+  /api/sleeps/{sleep-id}:
+    patch:
+      description: Update a sleep
+      tags:
+        - Sleep
+      parameters:
+        - $ref: '#/components/parameters/SleepIdPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sleep'
+      responses:
+        200:
+          description: Sleep has been updated
+    delete:
+      description: Delete a sleep
+      tags:
+        - Sleep
+      parameters:
+        - $ref: '#/components/parameters/SleepIdPath'
+      responses:
+        200:
+          description: Sleep has been deleted
+    get:
+      description: Get a specific sleep
+      tags:
+        - Sleep
+      parameters:
+        - $ref: '#/components/parameters/SleepIdPath'
+      responses:
+        200:
+          description: This is a specific sleep in the app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sleep'
+  /api/exercises:
+    post:
+      description: Add an exercise to the app
+      tags:
+        - Exercise
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exercise'
+      responses:
+        200:
+          description: Exercise has been created
+    get:
+      description: Get all exercises
+      tags:
+        - Exercise
+      responses:
+        200:
+          description: This is a list of exercises in the app
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exercise'
+  /api/exercises/{exercise-id}:
+    patch:
+      description: Update an exercise
+      tags:
+        - Exercise
+      parameters:
+        - $ref: '#/components/parameters/ExerciseIdPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exercise'
+      responses:
+        200:
+          description: Exercise has been updated
+    delete:
+      description: Delete an exercise
+      tags:
+        - Exercise
+      parameters:
+        - $ref: '#/components/parameters/ExerciseIdPath'
+      responses:
+        200:
+          description: Exercise has been deleted
+    get:
+      description: Get a specific exercise
+      tags:
+        - Exercise
+      parameters:
+        - $ref: '#/components/parameters/ExerciseIdPath'
+      responses:
+        200:
+          description: This is a specific exercise in the app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exercise'
+  /api/trainers:
+    post:
+      description: Add a trainer to the app
+      tags:
+        - Trainer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Trainer'
+      responses:
+        200:
+          description: Trainer has been created
+    get:
+      description: Get all trainers
+      tags:
+        - Trainer
+      responses:
+        200:
+          description: This is a list of trainers in the app
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Trainer'
+  /api/trainers/{trainer-id}:
+    patch:
+      description: Update a trainer
+      tags:
+        - Trainer
+      parameters:
+        - $ref: '#/components/parameters/TrainerIdPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Trainer'
+      responses:
+        200:
+          description: Trainer has been updated
+    delete:
+      description: Delete a trainer
+      tags:
+        - Trainer
+      parameters:
+        - $ref: '#/components/parameters/TrainerIdPath'
+      responses:
+        200:
+          description: Trainer has been deleted
+    get:
+      description: Get a specific trainer
+      tags:
+        - Trainer
+      parameters:
+        - $ref: '#/components/parameters/TrainerIdPath'
+      responses:
+        200:
+          description: This is a specific trainer in the app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trainer'
+  /api/trainers/{trainer-id}/users:
+    get:
+      description: Get all users for this trainer
+      tags:
+        - Trainer
+      parameters:
+        - $ref: '#/components/parameters/TrainerIdPath'
+      responses:
+        200:
+          description: This is a list of users in the app for this trainer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /api/trainers/email/{email}:
+    get:
+      description: Find a trainer by email address
+      tags:
+        - Trainer
+      parameters:
+        - $ref: '#/components/parameters/EmailPath'
+      responses:
+        200:
+          description: This is a specific trainer in the app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trainer'
+  /api/plans:
+    post:
+      description: Add an plan to the app
+      tags:
+        - Plan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Plan'
+      responses:
+        200:
+          description: Plan has been created
+    get:
+      description: Get all plans
+      tags:
+        - Plan
+      responses:
+        200:
+          description: This is a list of plans in the app
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plan'
+  /api/plans/{plan-id}:
+    patch:
+      description: Update an plan
+      tags:
+        - Plan
+      parameters:
+        - $ref: '#/components/parameters/PlanIdPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Plan'
+      responses:
+        200:
+          description: Plan has been updated
+    delete:
+      description: Delete a plan
+      tags:
+        - Plan
+      parameters:
+        - $ref: '#/components/parameters/PlanIdPath'
+      responses:
+        200:
+          description: Plan has been deleted
+    get:
+      description: Get a specific plan
+      tags:
+        - Plan
+      parameters:
+        - $ref: '#/components/parameters/PlanIdPath'
+      responses:
+        200:
+          description: This is a specific plan in the app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+  /api/plans/{plan-id}/users:
+    get:
+      description: Get all plans
+      tags:
+        - Plan
+      parameters:
+        - $ref: '#/components/parameters/PlanIdPath'
+      responses:
+        200:
+          description: This is a list of users in the app on this plan
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
 components:
   parameters:
     EmailPath:
@@ -194,6 +594,46 @@ components:
       schema:
         type: integer
         example: 2323
+    ExerciseIdPath:
+      in: path
+      name: exercise-id
+      description: Exercise id path parameter
+      required: true
+      schema:
+        type: integer
+        example: 2323
+    AssessmentIdPath:
+      in: path
+      name: assessment-id
+      description: Assessment id path parameter
+      required: true
+      schema:
+        type: integer
+        example: 2323
+    SleepIdPath:
+      in: path
+      name: sleep-id
+      description: Sleep id path parameter
+      required: true
+      schema:
+        type: integer
+        example: 2323
+    TrainerIdPath:
+      in: path
+      name: trainer-id
+      description: Trainer id path parameter
+      required: true
+      schema:
+        type: integer
+        example: 2323
+    PlanIdPath:
+      in: path
+      name: plan-id
+      description: Plan id path parameter
+      required: true
+      schema:
+        type: integer
+        example: 2323
   schemas:
     User:
       type: object
@@ -201,24 +641,147 @@ components:
         id:
           type: integer
           example: 2323
-        name: 
+        name:
           type: string
           example: Homer Simpson
         email:
           type: string
           example: homer@simpson.com
+        password:
+          type: string
+          example: testtest
+        gender:
+          type: string
+          example: M
+        height:
+          type: integer
+          example: 180
+        startWeight:
+          type: integer
+          example: 100
+        trainerId:
+          type: integer
+          example: 1
+        planId:
+          type: integer
+          example: 1
     Activity:
       type: object
       properties:
         id:
           type: integer
           example: 2323
-        name: 
+        duration:
+          type: number
+          example: 50.0
+        calories:
+          type: integer
+          example: 500
+        started:
+          type: string
+          example: 2023-11-01T02:00:00.000Z
+        activityType:
+          type: integer
+          example: 1
+        userId:
+          type: integer
+          example: 1
+    Assessment:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1234
+        weight:
+          type: integer
+          example: 100
+        chest:
+          type: integer
+          example: 32
+        thigh:
+          type: integer
+          example: 32
+        arm:
+          type: integer
+          example: 32
+        waist:
+          type: integer
+          example: 32
+        hips:
+          type: integer
+          example: 32
+        assessmentDate:
+          type: string
+          example: 2023-11-01T02:00:00.000Z
+        userId:
+          type: integer
+          example: 1
+    Sleep:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2323
+        started:
+          type: string
+          example: 2023-11-01T02:00:00.000Z
+        duration:
+          type: number
+          example: 150.0
+        userId:
+          type: integer
+          example: 2323
+    Exercise:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2323
+        name:
           type: string
           example: Aerobics
-        
+        type:
+          type: string
+          example: Fitness
+    Trainer:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2323
+        name:
+          type: string
+          example: Homer Simpson
+        email:
+          type: string
+          example: homer@simpson.com
+        password:
+          type: string
+          example: testtest
+    Plan:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2323
+        name:
+          type: string
+          example: Premium
+        price:
+          type: number
+          example: 9.99
 tags:
   - name: User
     description: Everything about our Users
   - name: Activity
     description: Everything about our Activities
+  - name: Assessment
+    description: Everything about Assessments
+  - name: Sleep
+    description: Everything about Sleep History
+  - name: Exercise
+    description: Everything about Exercises
+  - name: Trainer
+    description: Everything about Trainers
+  - name: Plan
+    description: Everything about Plans

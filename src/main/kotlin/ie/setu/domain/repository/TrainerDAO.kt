@@ -59,6 +59,7 @@ class TrainerDAO {
                 Trainers.id eq id}) {
                 it[name] = trainer.name
                 it[email] = trainer.email
+                it[password] = trainer.password
             }
         }
     }
