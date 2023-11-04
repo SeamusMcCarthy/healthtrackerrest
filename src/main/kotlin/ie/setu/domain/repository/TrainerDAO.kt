@@ -30,7 +30,7 @@ class TrainerDAO {
             Trainers.insert {
                 it[name] = trainer.name
                 it[email] = trainer.email
-
+                it[password] = trainer.password
             }
         }
     }

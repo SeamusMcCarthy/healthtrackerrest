@@ -13,10 +13,10 @@ object HealthTrackerController {
     private val userDao = UserDAO()
     private val activityDao = ActivityDAO()
     private val planDao = PlanDAO()
-    private val scheduleDao = ScheduleDAO()
     private val trainerDao = TrainerDAO()
     private val assessmentDao = AssessmentDAO()
     private val sleepDao = SleepDAO()
+    private val exerciseDao = ExerciseDAO()
 
     fun getAllUsers(ctx: Context) {
         ctx.json(userDao.getAll())
@@ -43,6 +43,15 @@ object HealthTrackerController {
             val users = userDao.findByPlanId(ctx.pathParam("plan-id").toInt())
             if (users.isNotEmpty()) {
                 ctx.json(users)
+            }
+        }
+    }
+
+    fun getActivitiesByActivityType(ctx: Context) {
+        if (exerciseDao.findById(ctx.pathParam("exercise-id").toInt()) != null) {
+            val activities = activityDao.findByActivityType(ctx.pathParam("exercise-id").toInt())
+            if (activities.isNotEmpty()) {
+                ctx.json(activities)
             }
         }
     }
@@ -75,6 +84,14 @@ object HealthTrackerController {
         }
     }
 
+    fun getTrainerByEmail(ctx: Context) {
+        val trainer = trainerDao.findByEmail(ctx.pathParam("email"))
+        if (trainer != null) {
+            ctx.json(trainer)
+        }
+    }
+
+
     fun deleteUser(ctx: Context){
         userDao.delete(ctx.pathParam("user-id").toInt())
     }
@@ -93,10 +110,6 @@ object HealthTrackerController {
 
     fun deleteAssessment(ctx: Context){
         assessmentDao.delete(ctx.pathParam("assessment-id").toInt())
-    }
-
-    fun deleteSchedule(ctx: Context){
-        scheduleDao.delete(ctx.pathParam("schedule-id").toInt())
     }
 
     fun deletePlan(ctx: Context){
@@ -125,14 +138,6 @@ object HealthTrackerController {
         planDao.update(
             id = ctx.pathParam("plan-id").toInt(),
             plan=planUpdates)
-    }
-
-    fun updateSchedule(ctx: Context){
-        val mapper = jacksonObjectMapper()
-        val scheduleUpdates = mapper.readValue<Schedule>(ctx.body())
-        scheduleDao.update(
-            id = ctx.pathParam("schedule-id").toInt(),
-            schedule=scheduleUpdates)
     }
 
     fun updateSleep(ctx: Context){
@@ -241,17 +246,6 @@ object HealthTrackerController {
         }
     }
 
-    fun getAllSchedules(ctx: Context) {
-        ctx.json(scheduleDao.getAll())
-    }
-
-    fun getScheduleByScheduleId(ctx: Context) {
-        val schedule = scheduleDao.findById(ctx.pathParam("schedule-id").toInt())
-        if (schedule != null) {
-            ctx.json(schedule)
-        }
-    }
-
     fun getAllTrainers(ctx: Context) {
         ctx.json(trainerDao.getAll())
     }
@@ -298,10 +292,33 @@ object HealthTrackerController {
         }
     }
 
-    fun addSchedule(ctx: Context) {
+    fun getAllExercises(ctx: Context) {
+        ctx.json(exerciseDao.getAll())
+    }
+
+    fun getExerciseByExerciseId(ctx: Context) {
+        val exercise = exerciseDao.findById(ctx.pathParam("exercise-id").toInt())
+        if (exercise != null) {
+            ctx.json(exercise)
+        }
+    }
+
+    fun addExercise(ctx: Context) {
         val mapper = jacksonObjectMapper()
-        val schedule = mapper.readValue<Schedule>(ctx.body())
-        scheduleDao.save(schedule)
-        ctx.json(schedule)
+        val exercise = mapper.readValue<Exercise>(ctx.body())
+        exerciseDao.save(exercise)
+        ctx.json(exercise)
+    }
+
+    fun deleteExercise(ctx: Context){
+        exerciseDao.delete(ctx.pathParam("exercise-id").toInt())
+    }
+
+    fun updateExercise(ctx: Context){
+        val mapper = jacksonObjectMapper()
+        val exerciseUpdates = mapper.readValue<Exercise>(ctx.body())
+        exerciseDao.update(
+            id = ctx.pathParam("exercise-id").toInt(),
+            exercise=exerciseUpdates)
     }
 }
