@@ -1,6 +1,5 @@
 package ie.setu.domain.repository
 
-
 import ie.setu.domain.Schedule
 import ie.setu.domain.db.Schedules
 import ie.setu.utils.mapToSchedule
@@ -36,6 +35,24 @@ class ScheduleDAO {
                 it[classname] = schedule.classname
                 it[dayofweek] = schedule.dayofweek
 
+            }
+        }
+    }
+
+    fun delete(id: Int):Int {
+        return transaction {
+            Schedules.deleteWhere {
+                Schedules.id eq id
+            }
+        }
+    }
+
+    fun update(id: Int, schedule: Schedule){
+        transaction {
+            Schedules.update ({
+                Schedules.id eq id}) {
+                it[classname] = schedule.classname
+                it[dayofweek] = schedule.dayofweek
             }
         }
     }

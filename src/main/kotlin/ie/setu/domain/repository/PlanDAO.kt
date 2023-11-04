@@ -1,10 +1,8 @@
 package ie.setu.domain.repository
 
-import ie.setu.domain.Activity
+
 import ie.setu.domain.Plan
-import ie.setu.domain.db.Activities
 import ie.setu.domain.db.Plans
-import ie.setu.utils.mapToActivity
 import ie.setu.utils.mapToPlan
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -28,6 +26,34 @@ class PlanDAO {
                 .select() { Plans.id eq id}
                 .map{mapToPlan(it)}
                 .firstOrNull()
+        }
+    }
+
+    fun save(plan: Plan){
+        transaction {
+            Plans.insert {
+                it[name] = plan.name
+                it[price] = plan.price
+
+            }
+        }
+    }
+
+    fun delete(id: Int):Int {
+        return transaction {
+            Plans.deleteWhere {
+                Plans.id eq id
+            }
+        }
+    }
+
+    fun update(id: Int, plan: Plan){
+        transaction {
+            Plans.update ({
+                Plans.id eq id}) {
+                it[name] = plan.name
+                it[price] = plan.price
+            }
         }
     }
 }

@@ -30,6 +30,12 @@ class UserDAO {
             Users.insert {
                 it[name] = user.name
                 it[email] = user.email
+                it[password] = user.password
+                it[gender] = user.gender
+                it[height] = user.height
+                it[startWeight] = user.startWeight
+                it[trainerId] = user.trainerId
+                it[planId] = user.planId
             }
         }
     }
@@ -41,6 +47,26 @@ class UserDAO {
             }
                 .map { mapToUser(it) }
                 .firstOrNull()
+        }
+    }
+
+    fun findByTrainerID(trainerID: Int): List<User> {
+        return transaction {
+            Users.select {
+                Users.trainerId eq trainerID
+            }
+                .map { mapToUser(it) }
+
+        }
+    }
+
+    fun findByPlanId(planId: Int): List<User> {
+        return transaction {
+            Users.select {
+                Users.planId eq planId
+            }
+                .map { mapToUser(it) }
+
         }
     }
 
@@ -58,6 +84,12 @@ class UserDAO {
                 Users.id eq id}) {
                 it[name] = user.name
                 it[email] = user.email
+                it[password] = user.password
+                it[gender] = user.gender
+                it[height] = user.height
+                it[startWeight] = user.startWeight
+                it[trainerId] = user.trainerId
+                it[planId] = user.planId
             }
         }
     }
