@@ -28,6 +28,16 @@ class ActivityDAO {
         }
     }
 
+    fun findByActivityType(exerciseID: Int): List<Activity> {
+        return transaction {
+            Activities.select {
+                Activities.activityType eq exerciseID
+            }
+                .map { mapToActivity(it) }
+
+        }
+    }
+
     //Find all activities for a specific user id
     fun findByUserId(userId: Int): List<Activity>{
         return transaction {
@@ -41,10 +51,31 @@ class ActivityDAO {
     fun save(activity: Activity){
         transaction {
             Activities.insert {
-                it[description] = activity.description
                 it[duration] = activity.duration
                 it[started] = activity.started
                 it[calories] = activity.calories
+                it[activityType] = activity.activityType
+                it[userId] = activity.userId
+            }
+        }
+    }
+
+    fun delete(id: Int):Int {
+        return transaction {
+            Activities.deleteWhere {
+                Activities.id eq id
+            }
+        }
+    }
+
+    fun update(id: Int, activity: Activity){
+        transaction {
+            Activities.update ({
+                Activities.id eq id}) {
+                it[duration] = activity.duration
+                it[started] = activity.started
+                it[calories] = activity.calories
+                it[activityType] = activity.activityType
                 it[userId] = activity.userId
             }
         }

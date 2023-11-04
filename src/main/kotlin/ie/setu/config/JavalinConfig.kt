@@ -1,6 +1,8 @@
 package ie.setu.config
 
+import ie.setu.controllers.AccountController
 import ie.setu.controllers.HealthTrackerController
+import ie.setu.controllers.StaticDataController
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.*
 
@@ -27,23 +29,93 @@ class JavalinConfig {
     private fun registerRoutes(app: Javalin) {
         app.routes {
             path("/api/users") {
-                get(HealthTrackerController::getAllUsers)
-                post(HealthTrackerController::addUser)
+                get(AccountController::getAllUsers)
+                post(AccountController::addUser)
                 path("{user-id}"){
-                    get(HealthTrackerController::getUserByUserId)
-                    delete(HealthTrackerController::deleteUser)
-                    patch(HealthTrackerController::updateUser)
+                    get(AccountController::getUserByUserId)
+                    delete(AccountController::deleteUser)
+                    patch(AccountController::updateUser)
                     path("activities"){
                         get(HealthTrackerController::getActivitiesByUserId)
                     }
+                    path("assessments"){
+                        get(HealthTrackerController::getAssessmentsByUserId)
+                    }
+                    path("sleeps"){
+                        get(HealthTrackerController::getSleepsByUserId)
+                    }
                 }
                 path("/email/{email}"){
-                    get(HealthTrackerController::getUserByEmail)
+                    get(AccountController::getUserByEmail)
                 }
             }
             path("/api/activities") {
                 get(HealthTrackerController::getAllActivities)
                 post(HealthTrackerController::addActivity)
+                path("{activity-id}"){
+                    get(HealthTrackerController::getActivityByActivityId)
+                    delete(HealthTrackerController::deleteActivity)
+                    patch(HealthTrackerController::updateActivity)
+                }
+                path("/type/{exercise-id}") {
+                    get(HealthTrackerController::getActivitiesByActivityType)
+                }
+            }
+            path("/api/assessments") {
+                get(HealthTrackerController::getAllAssessments)
+                post(HealthTrackerController::addAssessment)
+                path("{assessment-id}"){
+                    get(HealthTrackerController::getAssessmentByAssessmentId)
+                    delete(HealthTrackerController::deleteAssessment)
+                    patch(HealthTrackerController::updateAssessment)
+                }
+            }
+            path("/api/plans") {
+                get(StaticDataController::getAllPlans)
+                post(StaticDataController::addPlan)
+                path("{plan-id}"){
+                    get(StaticDataController::getPlanByPlanId)
+                    delete(StaticDataController::deletePlan)
+                    patch(StaticDataController::updatePlan)
+                    path("users"){
+                        get(AccountController::getUsersByPlanId)
+                    }
+                }
+            }
+            path("/api/trainers") {
+                get(AccountController::getAllTrainers)
+                post(AccountController::addTrainer)
+                path("{trainer-id}"){
+                    get(AccountController::getTrainerByTrainerId)
+                    delete(AccountController::deleteTrainer)
+                    patch(AccountController::updateTrainer)
+                    path("users"){
+                        get(AccountController::getUsersByTrainerId)
+                    }
+                }
+                path("/email/{email}"){
+                    get(AccountController::getTrainerByEmail)
+                }
+
+            }
+            path("/api/sleeps") {
+                get(HealthTrackerController::getAllSleeps)
+                post(HealthTrackerController::addSleep)
+                path("{sleep-id}"){
+                    get(HealthTrackerController::getSleepBySleepId)
+                    delete(HealthTrackerController::deleteSleep)
+                    patch(HealthTrackerController::updateSleep)
+                }
+            }
+
+            path("/api/exercises") {
+                get(StaticDataController::getAllExercises)
+                post(StaticDataController::addExercise)
+                path("{exercise-id}"){
+                    get(StaticDataController::getExerciseByExerciseId)
+                    delete(StaticDataController::deleteExercise)
+                    patch(StaticDataController::updateExercise)
+                }
             }
         }
     }

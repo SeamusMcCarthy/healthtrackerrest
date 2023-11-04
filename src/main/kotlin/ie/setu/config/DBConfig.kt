@@ -11,11 +11,11 @@ class DbConfig{
 
         logger.info{"Starting DB Connection..."}
 
-        val PGHOST = "trumpet.db.elephantsql.com"
+        val PGHOST = "flora.db.elephantsql.com"
         val PGPORT = "5432"
-        val PGUSER = "obdurfvt"
-        val PGPASSWORD = "gEQWXQBZUMey7QvZC95ehbyyot8GszrP"
-        val PGDATABASE = "obdurfvt"
+        val PGUSER = "wlhivwim"
+        val PGPASSWORD = "5S3kKb8t9WWJ-Z1UFt5JiBTKCi8H_SbP"
+        val PGDATABASE = "wlhivwim"
 
         //url format should be jdbc:postgresql://host:port/database
         val dbUrl = "jdbc:postgresql://$PGHOST:$PGPORT/$PGDATABASE"

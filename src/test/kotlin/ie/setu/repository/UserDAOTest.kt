@@ -1,9 +1,15 @@
 package ie.setu.repository
 
 import ie.setu.domain.User
+import ie.setu.domain.db.Plans
+import ie.setu.domain.db.Trainers
 import ie.setu.domain.db.Users
+import ie.setu.domain.repository.PlanDAO
+import ie.setu.domain.repository.TrainerDAO
 import ie.setu.domain.repository.UserDAO
 import ie.setu.helpers.nonExistingEmail
+import ie.setu.helpers.plans
+import ie.setu.helpers.trainers
 import ie.setu.helpers.users
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -18,6 +24,10 @@ val user1 = users[0]
 val user2 = users[1]
 val user3 = users[2]
 
+val userTrainer1 = trainers[0]
+
+val userPlan1 = plans[0]
+
 class UserDAOTest {
 
     companion object {
@@ -30,6 +40,18 @@ class UserDAOTest {
         }
     }
 
+    internal fun populateTrainerTable(): TrainerDAO{
+        SchemaUtils.create(Trainers)
+        val trainerDAO = TrainerDAO()
+        trainerDAO.save(userTrainer1)
+        return trainerDAO
+    }
+    internal fun populatePlanTable(): PlanDAO{
+        SchemaUtils.create(Plans)
+        val planDAO = PlanDAO()
+        planDAO.save(userPlan1)
+        return planDAO
+    }
     internal fun populateUserTable(): UserDAO{
         SchemaUtils.create(Users)
         val userDAO = UserDAO()
@@ -48,6 +70,8 @@ class UserDAOTest {
 
                 //Arrange - create and populate table with three users
 
+                populateTrainerTable()
+                populatePlanTable()
                 val userDAO = populateUserTable()
 
                 //Act & Assert
@@ -55,6 +79,8 @@ class UserDAOTest {
                 assertEquals(user1, userDAO.findById(user1.id))
                 assertEquals(user2, userDAO.findById(user2.id))
                 assertEquals(user3, userDAO.findById(user3.id))
+
+
             }
         }
     }
@@ -66,7 +92,8 @@ class UserDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three users
-
+                populateTrainerTable()
+                populatePlanTable()
                 val userDAO = populateUserTable()
 
                 //Act & Assert
@@ -76,6 +103,8 @@ class UserDAOTest {
         @Test
         fun `get user by id that exists, results in a correct user returned`() {
             transaction {
+                populateTrainerTable()
+                populatePlanTable()
                 //Arrange - create and populate table with three users
                 SchemaUtils.create(Users)
                 val userDAO = UserDAO()
@@ -84,7 +113,7 @@ class UserDAOTest {
                 userDAO.save(user3)
 
                 //Act & Assert
-                assertEquals(null, userDAO.findById(4))
+                assertEquals(user2, userDAO.findById(2))
             }
         }
 
@@ -93,7 +122,8 @@ class UserDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three users
-
+                populateTrainerTable()
+                populatePlanTable()
                 val userDAO = populateUserTable()
 
                 //Act & Assert
@@ -119,6 +149,8 @@ class UserDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three users
+                populateTrainerTable()
+                populatePlanTable()
                 val userDAO = populateUserTable()
 
                 //Act & Assert
@@ -131,6 +163,8 @@ class UserDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three users
+                populateTrainerTable()
+                populatePlanTable()
                 val userDAO = populateUserTable()
 
                 //Act & Assert
@@ -146,6 +180,8 @@ class UserDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three users
+                populateTrainerTable()
+                populatePlanTable()
                 val userDAO = populateUserTable()
 
                 //Act & Assert
@@ -160,6 +196,8 @@ class UserDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three users
+                populateTrainerTable()
+                populatePlanTable()
                 val userDAO = populateUserTable()
 
                 //Act & Assert
@@ -178,10 +216,12 @@ class UserDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three users
+                populateTrainerTable()
+                populatePlanTable()
                 val userDAO = populateUserTable()
 
                 //Act & Assert
-                val user3Updated = User(3, "new username", "new@email.ie")
+                val user3Updated = User(3, "new username", "new@email.ie", "testtest", 'M', 180, 150, 1, 1)
                 userDAO.update(user3.id, user3Updated)
                 assertEquals(user3Updated, userDAO.findById(3))
             }
@@ -192,10 +232,12 @@ class UserDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three users
+                populateTrainerTable()
+                populatePlanTable()
                 val userDAO = populateUserTable()
 
                 //Act & Assert
-                val user4Updated = User(4, "new username", "new@email.ie")
+                val user4Updated = User(4, "new username", "new@email.ie", "testtest", 'M', 180, 150, 1, 1)
                 userDAO.update(4, user4Updated)
                 assertEquals(null, userDAO.findById(4))
                 assertEquals(3, userDAO.getAll().size)
