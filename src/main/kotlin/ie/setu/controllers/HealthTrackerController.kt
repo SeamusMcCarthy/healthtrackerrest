@@ -12,40 +12,9 @@ object HealthTrackerController {
 
     private val userDao = UserDAO()
     private val activityDao = ActivityDAO()
-    private val planDao = PlanDAO()
-    private val trainerDao = TrainerDAO()
     private val assessmentDao = AssessmentDAO()
     private val sleepDao = SleepDAO()
     private val exerciseDao = ExerciseDAO()
-
-    fun getAllUsers(ctx: Context) {
-        ctx.json(userDao.getAll())
-    }
-
-    fun getUserByUserId(ctx: Context) {
-        val user = userDao.findById(ctx.pathParam("user-id").toInt())
-        if (user != null) {
-            ctx.json(user)
-        }
-    }
-
-    fun getUsersByTrainerId(ctx: Context) {
-        if (trainerDao.findById(ctx.pathParam("trainer-id").toInt()) != null) {
-            val users = userDao.findByTrainerID(ctx.pathParam("trainer-id").toInt())
-            if (users.isNotEmpty()) {
-                ctx.json(users)
-            }
-        }
-    }
-
-    fun getUsersByPlanId(ctx: Context) {
-        if (planDao.findById(ctx.pathParam("plan-id").toInt()) != null) {
-            val users = userDao.findByPlanId(ctx.pathParam("plan-id").toInt())
-            if (users.isNotEmpty()) {
-                ctx.json(users)
-            }
-        }
-    }
 
     fun getActivitiesByActivityType(ctx: Context) {
         if (exerciseDao.findById(ctx.pathParam("exercise-id").toInt()) != null) {
@@ -59,49 +28,9 @@ object HealthTrackerController {
         }
     }
 
-    fun addUser(ctx: Context) {
-        val mapper = jacksonObjectMapper()
-        val user = mapper.readValue<User>(ctx.body())
-        userDao.save(user)
-        ctx.json(user)
-    }
-
-    fun addTrainer(ctx: Context) {
-        val mapper = jacksonObjectMapper()
-        val trainer = mapper.readValue<Trainer>(ctx.body())
-        trainerDao.save(trainer)
-        ctx.json(trainer)
-    }
-
-    fun addPlan(ctx: Context) {
-        val mapper = jacksonObjectMapper()
-        val plan = mapper.readValue<Plan>(ctx.body())
-        planDao.save(plan)
-        ctx.json(plan)
-    }
-
-    fun getUserByEmail(ctx: Context) {
-        val user = userDao.findByEmail(ctx.pathParam("email"))
-        if (user != null) {
-            ctx.json(user)
-        }
-    }
-
-    fun getTrainerByEmail(ctx: Context) {
-        val trainer = trainerDao.findByEmail(ctx.pathParam("email"))
-        if (trainer != null) {
-            ctx.json(trainer)
-        }
-    }
 
 
-    fun deleteUser(ctx: Context){
-        userDao.delete(ctx.pathParam("user-id").toInt())
-    }
 
-    fun deleteTrainer(ctx: Context){
-        trainerDao.delete(ctx.pathParam("trainer-id").toInt())
-    }
 
     fun deleteSleep(ctx: Context){
         sleepDao.delete(ctx.pathParam("sleep-id").toInt())
@@ -115,33 +44,11 @@ object HealthTrackerController {
         assessmentDao.delete(ctx.pathParam("assessment-id").toInt())
     }
 
-    fun deletePlan(ctx: Context){
-        planDao.delete(ctx.pathParam("plan-id").toInt())
-    }
 
-    fun updateUser(ctx: Context){
-        val mapper = jacksonObjectMapper()
-        val userUpdates = mapper.readValue<User>(ctx.body())
-        userDao.update(
-            id = ctx.pathParam("user-id").toInt(),
-            user=userUpdates)
-    }
 
-    fun updateTrainer(ctx: Context){
-        val mapper = jacksonObjectMapper()
-        val trainerUpdates = mapper.readValue<Trainer>(ctx.body())
-        trainerDao.update(
-            id = ctx.pathParam("trainer-id").toInt(),
-            trainer=trainerUpdates)
-    }
 
-    fun updatePlan(ctx: Context){
-        val mapper = jacksonObjectMapper()
-        val planUpdates = mapper.readValue<Plan>(ctx.body())
-        planDao.update(
-            id = ctx.pathParam("plan-id").toInt(),
-            plan=planUpdates)
-    }
+
+
 
     fun updateSleep(ctx: Context){
         val mapper = jacksonObjectMapper()
@@ -241,27 +148,9 @@ object HealthTrackerController {
         ctx.json(sleep)
     }
 
-    fun getAllPlans(ctx: Context) {
-        ctx.json(planDao.getAll())
-    }
 
-    fun getPlanByPlanId(ctx: Context) {
-        val plan = planDao.findById(ctx.pathParam("plan-id").toInt())
-        if (plan != null) {
-            ctx.json(plan)
-        }
-    }
 
-    fun getAllTrainers(ctx: Context) {
-        ctx.json(trainerDao.getAll())
-    }
 
-    fun getTrainerByTrainerId(ctx: Context) {
-        val trainer = trainerDao.findById(ctx.pathParam("trainer-id").toInt())
-        if (trainer != null) {
-            ctx.json(trainer)
-        }
-    }
 
     fun getAllAssessments(ctx: Context) {
         //mapper handles the deserialization of Joda date into a String.
@@ -314,33 +203,5 @@ object HealthTrackerController {
         }
     }
 
-    fun getAllExercises(ctx: Context) {
-        ctx.json(exerciseDao.getAll())
-    }
 
-    fun getExerciseByExerciseId(ctx: Context) {
-        val exercise = exerciseDao.findById(ctx.pathParam("exercise-id").toInt())
-        if (exercise != null) {
-            ctx.json(exercise)
-        }
-    }
-
-    fun addExercise(ctx: Context) {
-        val mapper = jacksonObjectMapper()
-        val exercise = mapper.readValue<Exercise>(ctx.body())
-        exerciseDao.save(exercise)
-        ctx.json(exercise)
-    }
-
-    fun deleteExercise(ctx: Context){
-        exerciseDao.delete(ctx.pathParam("exercise-id").toInt())
-    }
-
-    fun updateExercise(ctx: Context){
-        val mapper = jacksonObjectMapper()
-        val exerciseUpdates = mapper.readValue<Exercise>(ctx.body())
-        exerciseDao.update(
-            id = ctx.pathParam("exercise-id").toInt(),
-            exercise=exerciseUpdates)
-    }
 }
