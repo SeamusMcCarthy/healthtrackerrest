@@ -1,6 +1,8 @@
 package ie.setu.config
 
+import ie.setu.controllers.AccountController
 import ie.setu.controllers.HealthTrackerController
+import ie.setu.controllers.StaticDataController
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.*
 
@@ -27,12 +29,12 @@ class JavalinConfig {
     private fun registerRoutes(app: Javalin) {
         app.routes {
             path("/api/users") {
-                get(HealthTrackerController::getAllUsers)
-                post(HealthTrackerController::addUser)
+                get(AccountController::getAllUsers)
+                post(AccountController::addUser)
                 path("{user-id}"){
-                    get(HealthTrackerController::getUserByUserId)
-                    delete(HealthTrackerController::deleteUser)
-                    patch(HealthTrackerController::updateUser)
+                    get(AccountController::getUserByUserId)
+                    delete(AccountController::deleteUser)
+                    patch(AccountController::updateUser)
                     path("activities"){
                         get(HealthTrackerController::getActivitiesByUserId)
                     }
@@ -44,7 +46,7 @@ class JavalinConfig {
                     }
                 }
                 path("/email/{email}"){
-                    get(HealthTrackerController::getUserByEmail)
+                    get(AccountController::getUserByEmail)
                 }
             }
             path("/api/activities") {
@@ -69,30 +71,30 @@ class JavalinConfig {
                 }
             }
             path("/api/plans") {
-                get(HealthTrackerController::getAllPlans)
-                post(HealthTrackerController::addPlan)
+                get(StaticDataController::getAllPlans)
+                post(StaticDataController::addPlan)
                 path("{plan-id}"){
-                    get(HealthTrackerController::getPlanByPlanId)
-                    delete(HealthTrackerController::deletePlan)
-                    patch(HealthTrackerController::updatePlan)
+                    get(StaticDataController::getPlanByPlanId)
+                    delete(StaticDataController::deletePlan)
+                    patch(StaticDataController::updatePlan)
                     path("users"){
-                        get(HealthTrackerController::getUsersByPlanId)
+                        get(AccountController::getUsersByPlanId)
                     }
                 }
             }
             path("/api/trainers") {
-                get(HealthTrackerController::getAllTrainers)
-                post(HealthTrackerController::addTrainer)
+                get(AccountController::getAllTrainers)
+                post(AccountController::addTrainer)
                 path("{trainer-id}"){
-                    get(HealthTrackerController::getTrainerByTrainerId)
-                    delete(HealthTrackerController::deleteTrainer)
-                    patch(HealthTrackerController::updateTrainer)
+                    get(AccountController::getTrainerByTrainerId)
+                    delete(AccountController::deleteTrainer)
+                    patch(AccountController::updateTrainer)
                     path("users"){
-                        get(HealthTrackerController::getUsersByTrainerId)
+                        get(AccountController::getUsersByTrainerId)
                     }
                 }
                 path("/email/{email}"){
-                    get(HealthTrackerController::getTrainerByEmail)
+                    get(AccountController::getTrainerByEmail)
                 }
 
             }
@@ -107,12 +109,12 @@ class JavalinConfig {
             }
 
             path("/api/exercises") {
-                get(HealthTrackerController::getAllExercises)
-                post(HealthTrackerController::addExercise)
+                get(StaticDataController::getAllExercises)
+                post(StaticDataController::addExercise)
                 path("{exercise-id}"){
-                    get(HealthTrackerController::getExerciseByExerciseId)
-                    delete(HealthTrackerController::deleteExercise)
-                    patch(HealthTrackerController::updateExercise)
+                    get(StaticDataController::getExerciseByExerciseId)
+                    delete(StaticDataController::deleteExercise)
+                    patch(StaticDataController::updateExercise)
                 }
             }
         }
