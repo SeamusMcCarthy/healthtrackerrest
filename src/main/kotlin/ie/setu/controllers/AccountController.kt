@@ -4,6 +4,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import ie.setu.domain.*
 import ie.setu.domain.repository.*
+import ie.setu.utils.jsonToObject
 import io.javalin.http.Context
 
 object AccountController {
@@ -14,13 +15,22 @@ object AccountController {
 
     // Functions for handling user account data
     fun getAllUsers(ctx: Context) {
-        ctx.json(userDao.getAll())
+        val users = userDao.getAll()
+        if (users.size != 0) {
+            ctx.status(200)
+            ctx.json(users)
+        } else {
+            ctx.status(404)
+        }
     }
 
     fun getUserByUserId(ctx: Context) {
         val user = userDao.findById(ctx.pathParam("user-id").toInt())
         if (user != null) {
             ctx.json(user)
+            ctx.status(200)
+        } else {
+            ctx.status(404)
         }
     }
     fun getUsersByTrainerId(ctx: Context) {
@@ -28,6 +38,9 @@ object AccountController {
             val users = userDao.findByTrainerID(ctx.pathParam("trainer-id").toInt())
             if (users.isNotEmpty()) {
                 ctx.json(users)
+                ctx.status(200)
+            } else {
+                ctx.status(404)
             }
         }
     }
@@ -37,6 +50,9 @@ object AccountController {
             val users = userDao.findByPlanId(ctx.pathParam("plan-id").toInt())
             if (users.isNotEmpty()) {
                 ctx.json(users)
+                ctx.status(200)
+            } else {
+                ctx.status(404)
             }
         }
     }
@@ -45,26 +61,35 @@ object AccountController {
         val user = userDao.findByEmail(ctx.pathParam("email"))
         if (user != null) {
             ctx.json(user)
+            ctx.status(200)
+        } else {
+            ctx.status(404)
         }
     }
 
     fun addUser(ctx: Context) {
-        val mapper = jacksonObjectMapper()
-        val user = mapper.readValue<User>(ctx.body())
-        userDao.save(user)
-        ctx.json(user)
+        val user : User = jsonToObject(ctx.body())
+        val userId = userDao.save(user)
+        if (userId != null) {
+            user.id = userId
+            ctx.json(user)
+            ctx.status(201)
+        }
     }
 
     fun deleteUser(ctx: Context){
-        userDao.delete(ctx.pathParam("user-id").toInt())
+        if (userDao.delete(ctx.pathParam("user-id").toInt()) != 0)
+            ctx.status(204)
+        else
+            ctx.status(404)
     }
 
     fun updateUser(ctx: Context){
-        val mapper = jacksonObjectMapper()
-        val userUpdates = mapper.readValue<User>(ctx.body())
-        userDao.update(
-            id = ctx.pathParam("user-id").toInt(),
-            user=userUpdates)
+        val foundUser : User = jsonToObject(ctx.body())
+        if ((userDao.update(id = ctx.pathParam("user-id").toInt(), user=foundUser)) != 0)
+            ctx.status(204)
+        else
+            ctx.status(404)
     }
 
     // Functions for handling trainer account data
