@@ -323,7 +323,8 @@
           </div>
       </card-header-layout>
       <card-body-layout>
-        <div :class="{ 'd-none': hideAssessmentForm }">
+        <div class="outer-form" :class="{ 'd-none': hideAssessmentForm }">
+
           <form id="addAssessment">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -367,7 +368,6 @@
               </div>
               <input type="number" class="form-control" v-model="formData.hips" name="hips" placeholder="Hips"/>
             </div>
-
           </form>
           <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link" @click="addAssessment()">Add Assessment</button>
         </div>
@@ -423,7 +423,7 @@
           </div>
       </card-header-layout>
       <card-body-layout>
-        <div :class="{ 'd-none': hideActivityForm }">
+        <div class="outer-form" :class="{ 'd-none': hideActivityForm }">
           <form id="addActivity">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -499,7 +499,7 @@
         </div>
       </card-header-layout>
       <card-body-layout>
-        <div :class="{ 'd-none': hideSleepForm }">
+        <div class="outer-form" :class="{ 'd-none': hideSleepForm }">
           <form id="addSleep">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
