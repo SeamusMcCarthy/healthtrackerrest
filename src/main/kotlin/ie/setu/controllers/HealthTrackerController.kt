@@ -44,12 +44,6 @@ object HealthTrackerController {
         assessmentDao.delete(ctx.pathParam("assessment-id").toInt())
     }
 
-
-
-
-
-
-
     fun updateSleep(ctx: Context){
         val mapper = jacksonObjectMapper()
         val sleepUpdates = mapper.readValue<Sleep>(ctx.body())
