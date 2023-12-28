@@ -817,4 +817,4 @@ tags:
   - name: Plan
     description: Everything about Plans
   - name: Authenticate
-    description: Details of logging in
+    description: Details of how to log in
