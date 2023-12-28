@@ -7,6 +7,25 @@ info:
     name: Seamus McCarthy
     email: 20091380@mail.wit.ie
 paths:
+  /api/authenticate:
+    get:
+      description: Validate a user login request
+      tags:
+        - Authenticate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        200:
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/User'
+                  - $ref: '#/components/schemas/Trainer'
   /api/users:
     post:
       description: Add a user to the app
@@ -770,6 +789,18 @@ components:
         price:
           type: number
           example: 9.99
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          example: homer@simpson.com
+        password:
+          type: string
+          example: testtest
+        accType:
+          type: string
+          example: member
 tags:
   - name: User
     description: Everything about our Users
@@ -785,3 +816,5 @@ tags:
     description: Everything about Trainers
   - name: Plan
     description: Everything about Plans
+  - name: Authenticate
+    description: Details of logging in
