@@ -62,8 +62,8 @@ class ExerciseDAO {
     /**
      * Update an [exercise]
      */
-    fun update(id: Int, exercise: Exercise){
-        transaction {
+    fun update(id: Int, exercise: Exercise): Int?{
+        return transaction {
             Exercises.update ({
                 Exercises.id eq id}) {
                 it[name] = exercise.name
