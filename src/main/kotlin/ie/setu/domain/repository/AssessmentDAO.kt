@@ -8,6 +8,10 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class AssessmentDAO {
+    /**
+     * Find a list of all assessments
+     * @return a list of assessments
+     */
     fun getAll(): ArrayList<Assessment> {
         val assessmentList: ArrayList<Assessment> = arrayListOf()
         transaction {
@@ -17,6 +21,10 @@ class AssessmentDAO {
         return assessmentList
     }
 
+    /**
+     * Finds an assessment
+     * @return the assessment matched by id
+     */
     fun findById(id: Int): Assessment?{
         return transaction {
             Assessments.select() {
@@ -26,6 +34,10 @@ class AssessmentDAO {
         }
     }
 
+    /**
+     * Find a list of assessments by user
+     * @return a list of assessments
+     */
     fun findByUserId(userId: Int): List<Assessment>{
         return transaction {
             Assessments
@@ -34,6 +46,9 @@ class AssessmentDAO {
         }
     }
 
+    /**
+     * Adds an [assessment] to the Assessments table
+     */
     fun save(assessment: Assessment){
         transaction {
             Assessments.insert {
@@ -49,6 +64,9 @@ class AssessmentDAO {
         }
     }
 
+    /**
+     * Deletes an assessment
+     */
     fun delete(id: Int):Int {
         return transaction {
             Assessments.deleteWhere {
@@ -57,6 +75,9 @@ class AssessmentDAO {
         }
     }
 
+    /**
+     * Updates an assessment by id
+     */
     fun update(id: Int, assessment: Assessment){
         transaction {
             Assessments.update ({

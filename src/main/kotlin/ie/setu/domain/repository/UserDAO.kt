@@ -7,6 +7,10 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class UserDAO {
+    /**
+     * Fina all users
+     * @return a list of users
+     */
     fun getAll(): ArrayList<User> {
         val userList: ArrayList<User> = arrayListOf()
         transaction {
@@ -16,6 +20,10 @@ class UserDAO {
         return userList
     }
 
+    /**
+     * Find a [user] by id
+     * @return a [user] entry
+     */
     fun findById(id: Int): User?{
         return transaction {
             Users.select() {
@@ -25,6 +33,10 @@ class UserDAO {
         }
     }
 
+    /**
+     * Add a [user] to the Users table
+     * @return the id of the newly added user
+     */
     fun save(user: User): Int? {
         return transaction {
             Users.insert {
@@ -40,6 +52,10 @@ class UserDAO {
         }
     }
 
+    /**
+     * Find a [user] by email
+     * @return a [user] entry
+     */
     fun findByEmail(email: String) :User? {
         return transaction {
             Users.select() {
@@ -50,16 +66,23 @@ class UserDAO {
         }
     }
 
+    /**
+     * Find a [user] list by [trainer] id
+     * @return a list of users by [trainer] id
+     */
     fun findByTrainerID(trainerID: Int): List<User> {
         return transaction {
             Users.select {
                 Users.trainerId eq trainerID
             }
                 .map { mapToUser(it) }
-
         }
     }
 
+    /**
+     * Find a [user] list by [plan] id
+     * @return a list of users by [plan] id
+     */
     fun findByPlanId(planId: Int): List<User> {
         return transaction {
             Users.select {
@@ -70,6 +93,9 @@ class UserDAO {
         }
     }
 
+    /**
+     * Delete a [user]
+     */
     fun delete(id: Int):Int {
         return transaction {
             Users.deleteWhere {
@@ -78,6 +104,9 @@ class UserDAO {
         }
     }
 
+    /**
+     * Update a [user]
+     */
     fun update(id: Int, user: User): Int?{
         return transaction {
             Users.update ({

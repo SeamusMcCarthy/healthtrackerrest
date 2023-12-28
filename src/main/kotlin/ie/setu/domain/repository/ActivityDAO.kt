@@ -8,7 +8,10 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class ActivityDAO {
 
-    //Get all the activities in the database regardless of user id
+    /**
+     * Find all activities
+     * @return a list of activities
+     */
     fun getAll(): ArrayList<Activity> {
         val activitiesList: ArrayList<Activity> = arrayListOf()
         transaction {
@@ -18,7 +21,10 @@ class ActivityDAO {
         return activitiesList
     }
 
-    //Find a specific activity by activity id
+    /**
+     * Find an activity by id
+     * @return an [activity]
+     */
     fun findByActivityId(id: Int): Activity?{
         return transaction {
             Activities
@@ -28,6 +34,10 @@ class ActivityDAO {
         }
     }
 
+    /**
+     * Find a list of activities by type
+     * @return a list of activities
+     */
     fun findByActivityType(exerciseID: Int): List<Activity> {
         return transaction {
             Activities.select {
@@ -38,7 +48,10 @@ class ActivityDAO {
         }
     }
 
-    //Find all activities for a specific user id
+    /**
+     * Find a list of activities for a user
+     * @return a list of activities for a [user]
+     */
     fun findByUserId(userId: Int): List<Activity>{
         return transaction {
             Activities
@@ -47,7 +60,9 @@ class ActivityDAO {
         }
     }
 
-    //Save an activity to the database
+    /**
+     * Adds an [activity] to the Activities table
+     */
     fun save(activity: Activity){
         transaction {
             Activities.insert {
@@ -60,6 +75,9 @@ class ActivityDAO {
         }
     }
 
+    /**
+     * Deletes an [activity]
+     */
     fun delete(id: Int):Int {
         return transaction {
             Activities.deleteWhere {
@@ -68,6 +86,9 @@ class ActivityDAO {
         }
     }
 
+    /**
+     * Updates an [activity]
+     */
     fun update(id: Int, activity: Activity){
         transaction {
             Activities.update ({
@@ -80,5 +101,4 @@ class ActivityDAO {
             }
         }
     }
-
 }
