@@ -6,6 +6,7 @@ import ie.setu.domain.*
 import ie.setu.domain.repository.*
 import ie.setu.utils.jsonToObject
 import io.javalin.http.Context
+import kong.unirest.json.JSONObject
 
 object AccountController {
     private val userDao = UserDAO()
@@ -64,6 +65,35 @@ object AccountController {
             ctx.status(200)
         } else {
             ctx.status(404)
+        }
+    }
+
+    fun authenticate(ctx: Context) {
+        val login : Login = jsonToObject(ctx.body())
+        if (login.accType == "member") {
+            val user = userDao.findByEmail(login.email)
+            if (user != null) {
+                if (user.password == login.password) {
+                    ctx.json(user)
+                    ctx.status(200)
+                } else {
+                    ctx.status(401)
+                }
+            } else {
+                ctx.status(403)
+            }
+        } else {
+            val trainer = trainerDao.findByEmail(login.email)
+            if (trainer != null) {
+                if (trainer.password == login.password) {
+                    ctx.json(trainer)
+                    ctx.status(200)
+                } else {
+                    ctx.status(401)
+                }
+            } else {
+                ctx.status(403)
+            }
         }
     }
 

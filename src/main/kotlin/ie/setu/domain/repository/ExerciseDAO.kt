@@ -29,14 +29,14 @@ class ExerciseDAO {
         }
     }
 
-    fun save(exercise: Exercise){
-        transaction {
+    fun save(exercise: Exercise): Int?{
+        return transaction {
             Exercises.insert {
                 it[name] = exercise.name
                 it[type] = exercise.type
 
             }
-        }
+        } get Exercises.id
     }
 
     fun delete(id: Int):Int {
