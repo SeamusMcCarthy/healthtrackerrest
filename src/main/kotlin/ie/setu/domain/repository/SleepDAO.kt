@@ -8,7 +8,10 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class SleepDAO {
 
-    //Get all the sleep entries in the database regardless of user id
+    /**
+     * Find all sleep entries
+     * @return a list of all [sleep] entries
+     */
     fun getAll(): ArrayList<Sleep> {
         val sleepsList: ArrayList<Sleep> = arrayListOf()
         transaction {
@@ -18,7 +21,9 @@ class SleepDAO {
         return sleepsList
     }
 
-    //Find a specific sleep entry by id
+    /**
+     * Find a [sleep] entry by id
+     */
     fun findBySleepId(id: Int): Sleep?{
         return transaction {
             Sleeps
@@ -28,7 +33,10 @@ class SleepDAO {
         }
     }
 
-    //Find all sleep entries for a specific user id
+    /**
+     * Find all [sleep] entries for a user
+     * @return a list of [sleep] entries
+     */
     fun findByUserId(userId: Int): List<Sleep>{
         return transaction {
             Sleeps
@@ -37,7 +45,9 @@ class SleepDAO {
         }
     }
 
-    //Save a sleep entry to the database
+    /**
+     * Add a [sleep] entry to the Sleeps table
+     */
     fun save(sleep: Sleep){
         transaction {
             Sleeps.insert {
@@ -48,6 +58,9 @@ class SleepDAO {
         }
     }
 
+    /**
+     * Delete a [sleep] entry
+     */
     fun delete(id: Int):Int {
         return transaction {
             Sleeps.deleteWhere {
@@ -56,6 +69,9 @@ class SleepDAO {
         }
     }
 
+    /**
+     * Update a [sleep] entry
+     */
     fun update(id: Int, sleep: Sleep){
         transaction {
             Sleeps.update ({
@@ -66,5 +82,4 @@ class SleepDAO {
             }
         }
     }
-
 }

@@ -9,7 +9,10 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class ExerciseDAO {
 
-    //Get all the plans in the database regardless of user id
+    /**
+     * Find a list of all exercises
+     * @return a list of all exercises
+     */
     fun getAll(): ArrayList<Exercise> {
         val exercisesList: ArrayList<Exercise> = arrayListOf()
         transaction {
@@ -19,7 +22,9 @@ class ExerciseDAO {
         return exercisesList
     }
 
-    //Find a specific entry by exercise id
+    /**
+     * Find an [exercise] by id
+     */
     fun findById(id: Int): Exercise?{
         return transaction {
             Exercises
@@ -29,6 +34,10 @@ class ExerciseDAO {
         }
     }
 
+    /**
+     * Add an [exercise] to the Exercises table
+     * @return the id of the added entry
+     */
     fun save(exercise: Exercise): Int?{
         return transaction {
             Exercises.insert {
@@ -39,6 +48,9 @@ class ExerciseDAO {
         } get Exercises.id
     }
 
+    /**
+     * Delete an [exercise]
+     */
     fun delete(id: Int):Int {
         return transaction {
             Exercises.deleteWhere {
@@ -47,6 +59,9 @@ class ExerciseDAO {
         }
     }
 
+    /**
+     * Update an [exercise]
+     */
     fun update(id: Int, exercise: Exercise){
         transaction {
             Exercises.update ({

@@ -7,6 +7,10 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class TrainerDAO {
+    /**
+     * Find all trainers
+     * @return a list of trainers
+     */
     fun getAll(): ArrayList<Trainer> {
         val trainerList: ArrayList<Trainer> = arrayListOf()
         transaction {
@@ -16,6 +20,10 @@ class TrainerDAO {
         return trainerList
     }
 
+    /**
+     * Find a [trainer] by id
+     * @return a [trainer] entry
+     */
     fun findById(id: Int): Trainer?{
         return transaction {
             Trainers.select() {
@@ -25,6 +33,9 @@ class TrainerDAO {
         }
     }
 
+    /**
+     * Add a [trainer] to the Trainers table
+     */
     fun save(trainer: Trainer){
         transaction {
             Trainers.insert {
@@ -35,6 +46,10 @@ class TrainerDAO {
         }
     }
 
+    /**
+     * Find a [trainer] by email
+     * @return a [trainer] entry
+     */
     fun findByEmail(email: String) :Trainer? {
         return transaction {
             Trainers.select() {
@@ -45,6 +60,9 @@ class TrainerDAO {
         }
     }
 
+    /**
+     * Delete a [trainer] entry
+     */
     fun delete(id: Int):Int {
         return transaction {
             Trainers.deleteWhere {
@@ -53,6 +71,9 @@ class TrainerDAO {
         }
     }
 
+    /**
+     * Update a [trainer] entry
+     */
     fun update(id: Int, trainer: Trainer){
         transaction {
             Trainers.update ({

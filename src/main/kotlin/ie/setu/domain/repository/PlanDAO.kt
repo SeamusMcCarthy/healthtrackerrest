@@ -9,7 +9,10 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class PlanDAO {
 
-    //Get all the plans in the database regardless of user id
+    /**
+     * List all plans
+     * @return a list of all plans
+     */
     fun getAll(): ArrayList<Plan> {
         val plansList: ArrayList<Plan> = arrayListOf()
         transaction {
@@ -19,7 +22,10 @@ class PlanDAO {
         return plansList
     }
 
-    //Find a specific plan by plan id
+    /**
+     * Find a [plan] by id
+     * @return the found [plan]
+     */
     fun findById(id: Int): Plan?{
         return transaction {
             Plans
@@ -29,16 +35,22 @@ class PlanDAO {
         }
     }
 
+    /**
+     * Add a [plan] to the Plans table
+     * @return the id of the [plan]
+     */
     fun save(plan: Plan): Int?{
         return transaction {
             Plans.insert {
                 it[name] = plan.name
                 it[price] = plan.price
-
             }
         } get Plans.id
     }
 
+    /**
+     * Delete a [plan]
+     */
     fun delete(id: Int):Int {
         return transaction {
             Plans.deleteWhere {
@@ -47,6 +59,9 @@ class PlanDAO {
         }
     }
 
+    /**
+     * Update a [plan]
+     */
     fun update(id: Int, plan: Plan){
         transaction {
             Plans.update ({
