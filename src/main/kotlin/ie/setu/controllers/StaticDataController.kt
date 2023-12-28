@@ -28,8 +28,12 @@ object StaticDataController {
     fun addPlan(ctx: Context) {
         val mapper = jacksonObjectMapper()
         val plan = mapper.readValue<Plan>(ctx.body())
-        planDao.save(plan)
-        ctx.json(plan)
+        val planId = planDao.save(plan)
+        if (planId != null) {
+            plan.id = planId
+            ctx.json(plan)
+        }
+
     }
 
     fun deletePlan(ctx: Context){

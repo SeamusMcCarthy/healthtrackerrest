@@ -14,7 +14,7 @@ import kotlin.test.assertNotEquals
 import ie.setu.helpers.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class HealthTrackerControllerTest {
+class AccountControllerTest {
 
     private val db = DbConfig().getDbConnection()
     private val app = ServerContainer.instance

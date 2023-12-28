@@ -42,6 +42,9 @@ class JavalinConfig {
 
     private fun registerRoutes(app: Javalin) {
         app.routes {
+            path("/api/authenticate") {
+                post(AccountController::authenticate)
+            }
             path("/api/users") {
                 get(AccountController::getAllUsers)
                 post(AccountController::addUser)
@@ -135,7 +138,15 @@ class JavalinConfig {
             // The @routeComponent that we added in layout.html earlier will be replaced
 // by the String inside the VueComponent. This means a call to / will load
 // the layout and display our <home-page> component.
-            get("/", VueComponent("<home-page></home-page>"))
+//            get("/", VueComponent("<home-page></home-page>"))
+            get("/", VueComponent("<carousel-page></carousel-page>"))
+            get("/trainer/{trainer-id}", VueComponent("<trainer-overview></trainer-overview>"))
+            get("/trainer/{trainer-id}/users", VueComponent("<trainer-users-overview></trainer-users-overview>"))
+            get("/exercises", VueComponent("<exercise-overview></exercise-overview>"))
+            get("/exercises/{exercise-id}", VueComponent("<exercise-details></exercise-details>"))
+            get("/plans", VueComponent("<plan-overview></plan-overview>"))
+            get("/plans/{plan-id}", VueComponent("<plan-details></plan-details>"))
+            get("/login", VueComponent("<user-login></user-login>"))
             get("/users", VueComponent("<user-overview></user-overview>"))
             get("/users/{user-id}", VueComponent("<user-profile></user-profile>"))
             get("/users/{user-id}/activities", VueComponent("<user-activity-overview></user-activity-overview>"))

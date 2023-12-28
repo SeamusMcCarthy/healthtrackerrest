@@ -1,4 +1,4 @@
-<template id="user-overview">
+<template id="trainer-users-overview">
   <app-layout>
     <div class="card bg-light mb-3">
       <div class="card-header">
@@ -116,8 +116,8 @@
   </app-layout>
 </template>
 <script>
-app.component("user-overview", {
-  template: "#user-overview",
+app.component("trainer-users-overview", {
+  template: "#trainer-users-overview",
   data: () => ({
     users: [],
     formData: [],
@@ -132,12 +132,12 @@ app.component("user-overview", {
   },
   methods: {
     fetchUsers: function () {
-      axios.get("/api/users")
+      const trainerId = this.$javalin.pathParams["trainer-id"];
+      axios.get(`/api/trainers/${trainerId}/users`)
           .then(res =>
             this.users = res.data
           )
           .catch(() => alert("Error while fetching users"));
-
     },
     deleteUser: function (user, index) {
       if (confirm('Are you sure you want to delete this user? This action cannot be undone.', 'Warning')) {

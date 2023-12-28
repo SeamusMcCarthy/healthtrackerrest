@@ -29,14 +29,14 @@ class PlanDAO {
         }
     }
 
-    fun save(plan: Plan){
-        transaction {
+    fun save(plan: Plan): Int?{
+        return transaction {
             Plans.insert {
                 it[name] = plan.name
                 it[price] = plan.price
 
             }
-        }
+        } get Plans.id
     }
 
     fun delete(id: Int):Int {
