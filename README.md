@@ -16,14 +16,17 @@ JUnit tests have been built out for each feature and Jacoco has been installed t
 Full Swagger docs have also been built and can be found in health-tracker-api.yaml within the project.
 
 The app is being hosted on Railway and when accessed, the user is presented with the below homepage
+
 ![image](https://github.com/SeamusMcCarthy/healthtrackerrest/assets/47305550/5235f3bc-ffae-4ec7-9722-d0adebeb38fb)
 
 The app allows for members and trainers to log in and each will have a different experience. 
 
 Users will see their profile details as well as their recorded assessments, activities and sleep history
+
 ![image](https://github.com/SeamusMcCarthy/healthtrackerrest/assets/47305550/fbb162b0-c26b-4e97-b6e0-d8073bd40fef)
 
 Users will have the option to add entries to each of the sections
+
 ![image](https://github.com/SeamusMcCarthy/healthtrackerrest/assets/47305550/f9fa7d76-e495-4628-aa7a-f7b0bd09961d)
 
 Trainers will have a different experience where logging in brings them to a different dashboard which shows them all members, members they train and also access to curate the list of exercises and plans that the app offers.
