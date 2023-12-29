@@ -12,8 +12,16 @@ val validHeight = 170
 val validWeight = 100
 val validTrainerID = 1
 val validPlanID = 1
+val validPlanName = "Dummy Plan"
+val validPlanPrice = 13.99
 val updatedName = "Updated Name"
 val updatedEmail = "Updated Email"
+val updatedPlanName = "Updated Plan Name"
+val updatedPlanPrice = 14.99
+val validExName = "Running Around"
+val validExType = "General Fitness"
+val updatedExName = "Running Around Some More"
+val updatedExType = "Endurance"
 
 val users = arrayListOf<User>(
     User(name = "Alice Wonderland", email = "alice@wonderland.com", id = 1, password = "TestTest", gender = 'M', height = 180, startWeight = 150, trainerId = 1, planId = 1),

@@ -62,8 +62,8 @@ class PlanDAO {
     /**
      * Update a [plan]
      */
-    fun update(id: Int, plan: Plan){
-        transaction {
+    fun update(id: Int, plan: Plan): Int?{
+        return transaction {
             Plans.update ({
                 Plans.id eq id}) {
                 it[name] = plan.name
